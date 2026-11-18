@@ -9,25 +9,48 @@
     "r": "(90 - lat) / 180  (disc radii, rim = 1)",
     "x": "r * sin(lon)",
     "y": "r * cos(lon)",
-    "extent": [-1, -1, 1, 1],
+    "extent": [
+      -1,
+      -1,
+      1,
+      1
+    ],
     "tile_grid": "level L = 2^L x 2^L tiles over [-1,1]^2, ty = row from top, tx = column from left"
   },
   "base_url": "https://rebelvue.github.io/enoch-tiles/",
   "layers": {
     "imagery": {
       "url": "https://rebelvue.github.io/enoch-tiles/imagery/{L}/{ty}/{tx}.webp",
-      "tile_size": 512, "format": "webp", "min_level": 0, "max_level": 7,
+      "tile_size": 512,
+      "format": "webp",
+      "min_level": 0,
+      "max_level": 7,
       "alpha": "disc rim only",
       "attribution": "Sentinel-2 cloudless 2020 by EOX IT Services GmbH (contains modified Copernicus Sentinel data 2020), CC BY-NC-SA 4.0",
       "notes": "poleward of 85.05 deg (N and S) is procedural ice fill, not imagery"
     },
     "height": {
       "url": "https://rebelvue.github.io/enoch-tiles/height/{L}/{ty}/{tx}.png",
-      "tile_size": 256, "format": "png", "encoding": "terrarium",
-      "decode": "(R*256 + G + B/256) - 32768", "units": "metres",
-      "min_level": 0, "max_level": 6,
+      "tile_size": 256,
+      "format": "png",
+      "encoding": "terrarium",
+      "decode": "(R*256 + G + B/256) - 32768",
+      "units": "metres",
+      "min_level": 0,
+      "max_level": 6,
       "source_resolution": "1 arc-minute",
       "attribution": "Copernicus DEM GLO-90 (c) DLR e.V. 2010-2014 and (c) Airbus Defence and Space GmbH 2014-2018, provided under COPERNICUS by the EU and ESA; GEBCO Compilation Group (2024) GEBCO 2024 Grid"
+    },
+    "lights": {
+      "url": "https://rebelvue.github.io/enoch-tiles/lights/{L}/{ty}/{tx}.webp",
+      "tile_size": 512,
+      "format": "webp (lossless greyscale)",
+      "min_level": 5,
+      "max_level": 6,
+      "encoding": "value/255 = sqrt(relative night light intensity)",
+      "empty_tiles": "tiles without any light are not stored (404); the map embeds a bitmask of stored tiles",
+      "source": "GHS-BUILT-S R2023A, epoch 2020, 30 arcsec (~1 km), European Commission JRC (public). Intensity = built-up fraction with a soft halo; a proxy for night lights, not observed radiance",
+      "attribution": "Night lights derived from GHSL, European Commission JRC"
     }
   },
   "missing_tiles": "tiles fully outside the disc are not stored (404)",
